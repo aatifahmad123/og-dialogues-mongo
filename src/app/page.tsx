@@ -1,23 +1,35 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { getDialogues } from '@/app/actions';
 import DialogueForm from '@/components/dialogue-form';
 import DialogueList from '@/components/dialogue-list';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { Plus } from 'lucide-react';
+import { Skeleton } from '@/components/ui/skeleton';
 
 type Dialogue = Awaited<ReturnType<typeof getDialogues>>[0];
 
-export default function Home({ dialogues: initialDialogues }: { dialogues: Dialogue[] }) {
+export default function Home() {
   const [open, setOpen] = useState(false);
-  const [dialogues, setDialogues] = useState(initialDialogues);
+  const [dialogues, setDialogues] = useState<Dialogue[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const handleSuccess = async () => {
-    setOpen(false);
+  const fetchDialogues = async () => {
+    setLoading(true);
     const updatedDialogues = await getDialogues();
     setDialogues(updatedDialogues);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchDialogues();
+  }, []);
+
+  const handleSuccess = () => {
+    setOpen(false);
+    fetchDialogues();
   };
 
   return (
@@ -32,7 +44,7 @@ export default function Home({ dialogues: initialDialogues }: { dialogues: Dialo
                         <span className="sr-only">Add Dialogue</span>
                     </Button>
                 </SheetTrigger>
-                <SheetContent side="bottom">
+                <SheetContent side="bottom" className="rounded-t-lg">
                     <SheetHeader>
                         <SheetTitle>Add a Legendary Dialogue</SheetTitle>
                     </SheetHeader>
@@ -44,7 +56,15 @@ export default function Home({ dialogues: initialDialogues }: { dialogues: Dialo
         </div>
       </header>
       <main className="container mx-auto px-4 py-8 sm:px-6 lg:px-8 flex-grow">
-        <DialogueList dialogues={dialogues} />
+        {loading ? (
+            <div className="space-y-4">
+                <Skeleton className="h-24 w-full" />
+                <Skeleton className="h-24 w-full" />
+                <Skeleton className="h-24 w-full" />
+            </div>
+        ) : (
+            <DialogueList dialogues={dialogues} onUpdate={fetchDialogues} />
+        )}
       </main>
     </div>
   );

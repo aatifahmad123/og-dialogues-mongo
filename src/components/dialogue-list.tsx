@@ -10,9 +10,10 @@ type Dialogue = {
 
 type DialogueListProps = {
     dialogues: Dialogue[];
+    onUpdate: () => void;
 };
 
-export default function DialogueList({ dialogues }: DialogueListProps) {
+export default function DialogueList({ dialogues, onUpdate }: DialogueListProps) {
     if (!dialogues || dialogues.length === 0) {
         return (
             <div className="text-center py-16">
@@ -25,7 +26,7 @@ export default function DialogueList({ dialogues }: DialogueListProps) {
     return (
         <div className="grid grid-cols-1 gap-4">
             {dialogues.map((dialogue) => (
-                <DialogueCard key={dialogue._id} dialogue={dialogue} />
+                <DialogueCard key={dialogue._id} dialogue={dialogue} onUpdate={onUpdate} />
             ))}
         </div>
     );

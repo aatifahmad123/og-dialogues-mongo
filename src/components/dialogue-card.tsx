@@ -17,8 +17,8 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Input } from './ui/input';
-import { Label } from './ui/label';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 
 type Dialogue = {
@@ -29,7 +29,13 @@ type Dialogue = {
     createdAt: string;
 };
 
-export default function DialogueCard({ dialogue }: { dialogue: Dialogue }) {
+type DialogueCardProps = {
+  dialogue: Dialogue;
+  onUpdate: () => void;
+};
+
+
+export default function DialogueCard({ dialogue, onUpdate }: DialogueCardProps) {
   const [token, setToken] = useState('');
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
@@ -45,6 +51,7 @@ export default function DialogueCard({ dialogue }: { dialogue: Dialogue }) {
         });
         setOpen(false);
         setToken('');
+        onUpdate();
       } else {
         toast({
           variant: 'destructive',
@@ -57,9 +64,9 @@ export default function DialogueCard({ dialogue }: { dialogue: Dialogue }) {
 
   return (
     <Card className="flex flex-col shadow-md hover:shadow-xl transition-shadow duration-300">
-      <CardHeader className="flex-row items-start justify-between">
-        <div>
-          <CardTitle className="font-headline text-xl">
+      <CardHeader className="flex-row items-start justify-between pb-2">
+        <div className="space-y-1">
+          <CardTitle className="font-headline text-lg">
             {dialogue.speaker}
           </CardTitle>
           <CardDescription>
