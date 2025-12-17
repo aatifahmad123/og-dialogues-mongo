@@ -66,7 +66,7 @@ export default function DialogueForm() {
             </div>
             <div className="space-y-2">
               <Label htmlFor="deleteToken">4-Digit Delete Token</Label>
-              <Input id="deleteToken" name="deleteToken" type="password" inputMode="numeric" placeholder="e.g., 1234" required pattern="\\d{4}" maxLength={4} />
+              <Input id="deleteToken" name="deleteToken" type="password" inputMode="numeric" placeholder="e.g., 1234" required pattern="\d{4}" maxLength={4} />
               {state.errors?.deleteToken && <p className="text-sm font-medium text-destructive">{state.errors.deleteToken[0]}</p>}
             </div>
           </div>
