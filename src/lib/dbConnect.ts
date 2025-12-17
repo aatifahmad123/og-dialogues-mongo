@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const MONGO_URI = 'mongodb+srv://ahmadaatif6_db_user:Sanae1UmgKsWGej0@og-dialogues-cluster.j3iogzd.mongodb.net/?retryWrites=true&w=majority&appName=og-dialogues-cluster';
+const MONGO_URI = process.env.MONGO_URI;
 
 if (!MONGO_URI) {
   throw new Error(
