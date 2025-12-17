@@ -1,6 +1,6 @@
 'use client';
 
-import { useFormState, useFormStatus } from 'react-dom';
+import { useActionState, useFormStatus } from 'react-dom';
 import { addDialogue } from '@/app/actions';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -10,6 +10,7 @@ import { Label } from '@/components/ui/label';
 import { useEffect, useRef } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2 } from 'lucide-react';
+import { useActionState as useReactActionState } from 'react';
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -24,7 +25,7 @@ function SubmitButton() {
 
 export default function DialogueForm() {
   const initialState = { message: null, errors: {} };
-  const [state, dispatch] = useFormState(addDialogue, initialState);
+  const [state, dispatch] = useReactActionState(addDialogue, initialState);
   const { toast } = useToast();
   const formRef = useRef<HTMLFormElement>(null);
 
