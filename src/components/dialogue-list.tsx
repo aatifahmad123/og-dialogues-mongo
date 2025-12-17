@@ -23,7 +23,7 @@ export default function DialogueList({ dialogues }: DialogueListProps) {
     }
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
             {dialogues.map((dialogue) => (
                 <DialogueCard key={dialogue._id} dialogue={dialogue} />
             ))}
