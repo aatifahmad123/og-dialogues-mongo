@@ -1,13 +1,12 @@
 'use client';
 
-import { useActionState } from 'react';
+import { useActionState, useEffect, useRef } from 'react';
 import { useFormStatus } from 'react-dom';
 import { addDialogue } from '@/app/actions';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { useEffect, useRef } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2 } from 'lucide-react';
 
@@ -22,7 +21,11 @@ function SubmitButton() {
   );
 }
 
-export default function DialogueForm() {
+type DialogueFormProps = {
+  onSuccess?: () => void;
+};
+
+export default function DialogueForm({ onSuccess }: DialogueFormProps) {
   const initialState = { message: null, errors: {} };
   const [state, dispatch] = useActionState(addDialogue, initialState);
   const { toast } = useToast();
@@ -35,6 +38,7 @@ export default function DialogueForm() {
         description: state.message,
       });
       formRef.current?.reset();
+      onSuccess?.();
     } else if (state.message) {
       toast({
         variant: 'destructive',
@@ -42,7 +46,7 @@ export default function DialogueForm() {
         description: state.message,
       });
     }
-  }, [state, toast]);
+  }, [state, toast, onSuccess]);
 
   return (
     <form ref={formRef} action={dispatch} className="space-y-4">

@@ -56,24 +56,19 @@ export default function DialogueCard({ dialogue }: { dialogue: Dialogue }) {
   };
 
   return (
-    <Card className="flex flex-col h-full shadow-md hover:shadow-xl transition-shadow duration-300">
-      <CardHeader>
-        <CardTitle className="font-headline text-xl">
-          {dialogue.speaker}
-        </CardTitle>
-        <CardDescription>
-          {formatDistanceToNow(new Date(dialogue.createdAt), { addSuffix: true })}
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="flex-grow">
-        <blockquote className="border-l-4 border-accent pl-4 italic text-muted-foreground">
-          "{dialogue.dialogue}"
-        </blockquote>
-      </CardContent>
-      <CardFooter>
+    <Card className="flex flex-col shadow-md hover:shadow-xl transition-shadow duration-300">
+      <CardHeader className="flex-row items-start justify-between">
+        <div>
+          <CardTitle className="font-headline text-xl">
+            {dialogue.speaker}
+          </CardTitle>
+          <CardDescription>
+            {formatDistanceToNow(new Date(dialogue.createdAt), { addSuffix: true })}
+          </CardDescription>
+        </div>
         <AlertDialog open={open} onOpenChange={setOpen}>
           <AlertDialogTrigger asChild>
-            <Button variant="ghost" size="icon" className="ml-auto text-muted-foreground hover:text-destructive" aria-label="Delete dialogue">
+            <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-destructive -mt-2 -mr-2" aria-label="Delete dialogue">
               <Trash2 className="h-4 w-4" />
             </Button>
           </AlertDialogTrigger>
@@ -105,7 +100,12 @@ export default function DialogueCard({ dialogue }: { dialogue: Dialogue }) {
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
-      </CardFooter>
+      </CardHeader>
+      <CardContent>
+        <blockquote className="border-l-4 border-accent pl-4 italic text-muted-foreground">
+          "{dialogue.dialogue}"
+        </blockquote>
+      </CardContent>
     </Card>
   );
 }

@@ -3,7 +3,7 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
-  title: 'OG Dialogues',
+  title: 'OG Dialogues of BTech',
   description: 'Legendary dialogues from your B.Tech days.',
 };
 
